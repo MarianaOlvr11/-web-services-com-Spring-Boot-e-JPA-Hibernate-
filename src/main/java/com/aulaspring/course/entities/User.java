@@ -1,5 +1,6 @@
 package com.aulaspring.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
@@ -20,6 +21,7 @@ public class User implements Serializable { // objeto transformado em bytes
     private String phone;
     private String password;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client") // um usuario para muito pedidos mapeado por "client"
     private List<Order> orders = new ArrayList<>(); // instancia coleção
 

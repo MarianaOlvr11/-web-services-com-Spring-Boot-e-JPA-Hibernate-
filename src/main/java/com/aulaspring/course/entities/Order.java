@@ -1,6 +1,7 @@
 package com.aulaspring.course.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,6 +16,8 @@ public class Order implements Serializable {
     @Id // chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Indicates that the primary key will be generated automatically by the database upon insertion.
     private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
     private Instant moment; // pega o instante do pedido
 
     @ManyToOne // associação muito para um com o usuario
