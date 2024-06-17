@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity // Specifies that this class is an entity and is mapped to a database table.
@@ -18,15 +20,20 @@ public class User implements Serializable { // objeto transformado em bytes
     private String phone;
     private String password;
 
+    @OneToMany(mappedBy = "client") // um usuario para muito pedidos mapeado por "client"
+    private List<Order> orders = new ArrayList<>(); // instancia coleção
+
     public User() {
     }
 
     public User(Long id, String name, String email, String phone, String password) {
+        super();
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.password = password;
+
     }
 
     public Long getId() {
@@ -67,6 +74,10 @@ public class User implements Serializable { // objeto transformado em bytes
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
     }
 
     @Override
