@@ -1,10 +1,17 @@
 package com.aulaspring.course.entities;
 
+import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity // Specifies that this class is an entity and is mapped to a database table.
+@Table(name = "tb_user") //  Maps this entity to the “tb_user” table in the database.
 public class User implements Serializable { // objeto transformado em bytes
 
+    @Id // chave primária
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Indicates that the primary key will be generated automatically by the database upon insertion.
     private Long id;
     private String name;
     private String email;
