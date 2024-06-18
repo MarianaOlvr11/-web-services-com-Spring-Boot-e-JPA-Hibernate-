@@ -83,6 +83,11 @@ public class TestConfig implements CommandLineRunner { // Implementa CommandLine
 
         orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
 
+        Payment pay1 = new Payment(null,Instant.parse("2019-06-20T21:53:07Z"),o1);
+        // Para salvar um objeto dependente de uma relação um para um
+        o1.setPayment(pay1);
+        orderRepository.save(o1); // salva no banco
+
 
     }
 }
