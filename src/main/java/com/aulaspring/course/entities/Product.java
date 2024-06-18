@@ -1,6 +1,8 @@
 package com.aulaspring.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Or;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -25,6 +27,9 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id") // Chave estrangeira que referencia a outra entidade envolvida na relação (neste caso, 'Category')
     )
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>(); // coleção de items
 
     public Product() {
     }
@@ -81,6 +86,16 @@ public class Product implements Serializable {
     public Set<Category> getCategories() {
         return categories;
     }
+
+    @JsonIgnore // previne o loop/
+    public Set<Order> getOrders() {
+        Set<Order> set = new HashSet<>(); // Cria um novo conjunto vazio para armazenar os pedidos
+        for(OrderItem item: items) { // Percorre todos os itens de pedido associados ao produto
+            set.add(item.getOrder()); // Adiciona o pedido associado a cada item ao conjunto
+        }
+        return set; // Retorna o conjunto de pedidos
+    }
+
 
     @Override
     public int hashCode() {
