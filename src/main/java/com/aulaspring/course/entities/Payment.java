@@ -1,5 +1,6 @@
 package com.aulaspring.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,7 +17,9 @@ public class Payment implements Serializable {
 
     private Instant moment;
 
+
     // terá sempre um pagamento(é dependente)
+    @JsonIgnore
     @OneToOne // um para um
     @MapsId
     private Order order;
