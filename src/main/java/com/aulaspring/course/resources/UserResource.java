@@ -45,5 +45,11 @@ public class UserResource { // Declaração da classe UserResource, que será o 
         return ResponseEntity.created(uri).body(obj); // Retorna uma resposta HTTP 200 OK com o corpo contendo o objeto User inserido
     }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){ // void pq nao retorna nada
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
