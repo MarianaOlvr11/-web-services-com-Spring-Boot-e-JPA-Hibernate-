@@ -1,15 +1,9 @@
 package com.aulaspring.course.config;
 
 // Importações das classes e interfaces necessárias
-import com.aulaspring.course.entities.Category;
-import com.aulaspring.course.entities.Order;
-import com.aulaspring.course.entities.Product;
-import com.aulaspring.course.entities.User;
+import com.aulaspring.course.entities.*;
 import com.aulaspring.course.entities.enums.OrderStatus;
-import com.aulaspring.course.repositories.CategoryRepository;
-import com.aulaspring.course.repositories.OrderRepository;
-import com.aulaspring.course.repositories.ProductRepository;
-import com.aulaspring.course.repositories.UserRepository;
+import com.aulaspring.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +30,9 @@ public class TestConfig implements CommandLineRunner { // Implementa CommandLine
 
     @Autowired
     private ProductRepository productRepository; // Repositório de produtos
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -78,6 +75,14 @@ public class TestConfig implements CommandLineRunner { // Implementa CommandLine
         p5.getCategories().add(cat2);
 
         productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5)); // salva novamente os produtos com as associações
+
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
 
     }
 }
