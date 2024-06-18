@@ -1,5 +1,6 @@
 package com.aulaspring.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,7 +18,8 @@ public class Category implements Serializable {
 
     private String name;
 
-    @Transient
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")// Especifica o nome da coleção na classe Product que mapeia a relação bidirecional
     private Set<Product> products = new HashSet<>(); // set para que não haja o mesmo produto na categoria
 
     public Category() {

@@ -21,7 +21,7 @@ public class Order implements Serializable {
     private Instant moment; // pega o instante do pedido
 
     @ManyToOne // associação muito para um com o usuario
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id") // contem o id do usuario do pedido
     private User client;
 
     private Integer orderStatus;
