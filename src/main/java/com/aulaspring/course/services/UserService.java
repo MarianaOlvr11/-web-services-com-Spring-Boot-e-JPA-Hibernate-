@@ -31,4 +31,18 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    public User update(Long id, User obj){
+        User entity = repository.getReferenceById(id); // instancia o usuario sem ir no banco de dados, só monitora pelo JPA
+        updateData(entity,obj);
+
+        return repository.save(entity);
+    }
+
+    private void updateData(User entity, User obj) { // só vai poder mudar nome, email e telefone
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
+    }
+
+
 }
