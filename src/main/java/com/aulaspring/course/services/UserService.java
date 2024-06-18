@@ -23,4 +23,8 @@ public class UserService {
         return obj.get(); // retorna o objeto com id x
     }
 
+    public User insert(User obj){
+        return  repository.save(obj);
+    }
+
 }

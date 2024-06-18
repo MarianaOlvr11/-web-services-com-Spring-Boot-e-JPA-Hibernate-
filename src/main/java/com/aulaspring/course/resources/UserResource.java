@@ -4,11 +4,10 @@ import com.aulaspring.course.entities.User;
 import com.aulaspring.course.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController /// Indica que a classe é um controlador REST, capaz de lidar com requisições HTTP e retornar dados em formato JSON ou XML.
@@ -18,6 +17,7 @@ public class UserResource { // Declaração da classe UserResource, que será o 
     @Autowired
     private UserService service;
 
+    // recupera dados
     @GetMapping // Indica que este método irá responder a requisições HTTP GET.
     public ResponseEntity<List<User>> findAll() {// tipo especifico de retorno de respostas de requisiçoes web, define um método público que retorna uma ResponseEntity contendo uma lista que contem uma lista User
         List<User> list = service.findAll();
@@ -30,4 +30,20 @@ public class UserResource { // Declaração da classe UserResource, que será o 
         User obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }
+
+    // Inserir novo recurso usando o método HTTP POST
+    @PostMapping
+    public ResponseEntity<User> insert(@RequestBody User obj) { // Chama o serviço para inserir o objeto User e atualiza a referência do objeto
+        obj = service.insert(obj); // pega o metodo do userService
+
+        // Cria uma URI para o novo recurso criado
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest() // Obtém a URI atual da requisição
+                .path("/{id}") // Adiciona um caminho à URI, com um espaço reservado {id}
+                .buildAndExpand(obj.getId()) // Substitui o espaço reservado {id} com o ID do objeto inserido
+                .toUri(); // Converte para um objeto URI
+
+        return ResponseEntity.created(uri).body(obj); // Retorna uma resposta HTTP 200 OK com o corpo contendo o objeto User inserido
+    }
+
+
 }
