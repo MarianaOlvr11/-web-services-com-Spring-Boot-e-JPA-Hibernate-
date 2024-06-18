@@ -10,15 +10,14 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-
-@Table(name = "tb_order")
+@Table(name = "tb_order") // Nome da tabela no banco de dados
 public class Order implements Serializable {
 
     @Id // chave primária
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Indicates that the primary key will be generated automatically by the database upon insertion.
     private Long id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'",timezone = "GMT")  // Armazena o instante do pedido, formatado para JSON com a configuração de fuso horário GMT
     private Instant moment; // pega o instante do pedido
 
     @ManyToOne // associação muito para um com o usuario
@@ -34,7 +33,7 @@ public class Order implements Serializable {
         this.id = id;
         this.moment = moment;
         this.client = client;
-        setOrderStatus(orderStatus);
+        setOrderStatus(orderStatus); // Configura o status do pedido utilizando o método setOrderStatus
     }
 
     public Long getId() {
@@ -61,7 +60,7 @@ public class Order implements Serializable {
         this.client = client;
     }
 
-    public OrderStatus getOrderStatus() {
+    public OrderStatus getOrderStatus() { // Converte o código inteiro do status do pedido para o enum OrderStatus
         return OrderStatus.valueOf(orderStatus);
     }
 

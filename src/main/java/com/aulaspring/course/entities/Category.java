@@ -17,7 +17,8 @@ public class Category implements Serializable {
 
     private String name;
 
-    // private Set<Product> products = new HashSet<>();
+    @Transient
+    private Set<Product> products = new HashSet<>(); // set para que não haja o mesmo produto na categoria
 
     public Category() {
     }
@@ -43,9 +44,9 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-   /* public Set<Product> getProducts() {
+   public Set<Product> getProducts() {
         return products;
-    } */
+    }
 
     @Override
     public boolean equals(Object o) {
